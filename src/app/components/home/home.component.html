@@ -1,0 +1,27 @@
+<h1>Products</h1>
+<div class="row">
+  <div class="col-4"></div>
+</div>
+<div *ngFor="let product of Products">
+  <div class="img-box">
+    <div class="imagewrap">
+      <img
+        src="{{ product.image }}"
+        width="200px"
+        height="200px"
+        class="img-fluid"
+        alt=""
+      />
+    </div>
+    <div class="thumb-content">
+      <h4>{{ product.title }}</h4>
+      <p>{{ product.description }}</p>
+
+      <p class="item-price"></p>
+      <p>{{ product.price }}₹</p>
+      <button (click)="addToCart(product.id)" class="btn btn-primary">
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="body pt-5">
+  <div class="container">
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th>id</th>
+          <th>Title</th>
+          <th>Product Details</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let product of carts">
+        <tr>
+          <td>{{ product.id }}</td>
+          <td>{{ product.title }}</td>
+          <td>{{ product.description.substring(0, 20) }}</td>
+          <td>{{ product.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-end me-5 px-5 fs-5">
+    <p>Total-100</p>
+    <p></p>
+  </div>
+  <div class="d-flex justify-content-end me-5 px-5">
+    <button class="btn btn-outline-primary"(click)="checkout()">checkout</button>
+  </div>
+</div>

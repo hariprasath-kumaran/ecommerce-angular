@@ -1,0 +1,104 @@
+
+  <body class="vh-100" style="background-color: #9a616d">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img
+                  src="https://plus.unsplash.com/premium_photo-1683147813288-463127a0fd13?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE2fHx8ZW58MHx8fHx8&w=1000&q=80"
+                  alt="login form"
+                  class="img-fluid"
+                  style="border-radius: 1rem 0 0 1rem"
+                />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+                  <form (ngSubmit)="onsubmit(LoginForm)" #LoginForm="ngForm">
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <i
+                        class="fas fa-cubes fa-2x me-3"
+                        style="color: #ff6219"
+                      ></i>
+                      <span class="h1 fw-bold mb-0">Welcome to ecommerce</span>
+                    </div>
+
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
+                      Sign into your account
+                    </h5>
+
+                    <div class="form-outline mb-4">
+                      <input
+                        type="email"
+                        id="email"
+                        class="form-control form-control-lg"
+                        ngModel
+                        name="email"
+                        required
+                        email
+                        #emailmodel="ngModel"
+                        [ngClass]="
+                          emailmodel.invalid && emailmodel.dirty
+                            ? 'is-invalid'
+                            : ''
+                        "
+                      />
+                      <div *ngIf="emailmodel.invalid" class="invalid-feedback">
+                        enter valid email address
+                      </div>
+
+                      <label class="form-label" for="email"
+                        >Email address</label
+                      >
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <input
+                        type="password"
+                        id="password"
+                        class="form-control form-control-lg"
+                        required
+                        ngModel
+                        password
+                        name="password"
+                        #passwordmodel="ngModel"
+                        [ngClass]="
+                          passwordmodel.invalid && passwordmodel.dirty
+                            ? 'is-invalid'
+                            : ''
+                        "
+                      />
+                      <label class="form-label" for="password">Password</label>
+                      <div
+                        *ngIf="passwordmodel.invalid"
+                        class="invalid-feedback"
+                      >
+                        password atleast 6 characters
+                      </div>
+                      <p class="text-danger">{{ error }}</p>
+                    </div>
+
+                    <div class="pt-1 mb-4">
+                      <button
+                        class="btn btn-dark btn-lg btn-block"
+                        type="submit"
+                        [disabled]="LoginForm.invalid"
+                      >
+                        Login
+                      </button>
+                      <div>
+                        <a class="text-primary" routerLink="/register"
+                          >Register</a
+                        >
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
