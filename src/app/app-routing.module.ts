@@ -10,9 +10,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
+  {path:'',component:HomeComponent},
   {path:'register',component:RegisterComponent},
   {path:'login',component:LoginComponent},
-  {path:'',component:HomeComponent},
   {path:'cart',component:CartComponent, canActivate:[authtenticateGuard]},
   {path:'orders',component:OrdersComponent},
 ];

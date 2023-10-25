@@ -14,7 +14,7 @@ export class LoginComponent {
   constructor(private authservice: AuthService, private router: Router) {}
   onsubmit(LoginForm: NgForm) {
     if (this.authservice.Validuser(LoginForm.value)) {
-      this.router.navigate(['#'], { replaceUrl: true });
+      this.router.navigate([''], { replaceUrl: true });
     } else {
       this.error = 'invalid credentials';
     }

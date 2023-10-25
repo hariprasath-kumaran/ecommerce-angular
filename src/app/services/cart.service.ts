@@ -4,7 +4,6 @@ import { Product } from '../model/product';
 import { Cart } from '../model/cart';
 import { AuthService } from './auth.service';
 import { Users } from '../model/users';
-import { Order } from '../model/order';
 import { ProductService } from './product.service';
 
 @Injectable({
@@ -14,77 +13,33 @@ export class CartService {
   carts: Product[] = [];
 
   constructor(
-    private productservice:ProductService,
+    private productservice: ProductService,
     private storageservice: StorageserviceService,
     private authservice: AuthService
   ) {}
 
-  getCount(): number {
-    let cart: Cart[] = this.storageservice.getCart();
-    let loggedInUser: Users = this.authservice.getLoggedInUser();
+ 
 
-    let userCart: Cart | undefined = cart.find(
-      (c) => c.user.id === loggedInUser.id
-    );
-
-    let count: number = 0;
-    if (userCart) {
-      for (let product of userCart.product) {
-        if (product.count) count += product.count;
-      }
-    }
-
-    return count;
-  }
-
-  addToCart(productId: number, operation: string): void {
-    let cart: Cart[] = this.storageservice.getCart();
-    let loggedInUser: Users = this.authservice.getLoggedInUser();
-    let products: Product[] = this.productservice.getLocalProducts();
-
-    let product: Product | undefined = products.find((p) => p.id === productId);
-
+  addToCart(id: number) {
+    let products: Product[] = this.storageservice.getCachedProducts();
+    let product = products.find((p) => p.id === id);
     if (product) {
-      let userCart: Cart | undefined = cart.find(
-        (c) => c.user.id === loggedInUser.id
-      );
+      let loggedUser: Users = this.authservice.getLoggedInUser();
 
-      console.log(userCart);
-
+      
+      let cart: Cart[] = this.storageservice.getCart();
+      let userCart: Cart = cart.find((c) => c.user.id === loggedUser.id)!;
       if (userCart) {
-        let productExists: Product | undefined = userCart?.product.find(
-          (p) => p.id === productId
-        );
-
-        if (productExists) {
-          let newCart: Product[] = [];
-          for (let product of userCart?.product!) {
-            if (product.id === productId) {
-              if (operation === '+')
-                newCart.push({ ...product, count: product.count! + 1 });
-              else newCart.push({ ...product, count: product.count! - 1 });
-            } else {
-              newCart.push(product);
-            }
-          }
-          userCart.product = newCart;
+        let existingCartItem = userCart.cart.find((p) => p.id === id);
+        if (existingCartItem) {
+          existingCartItem.count! += 1;
         } else {
-          userCart?.product.push({ ...product, count: 1 });
+          userCart.cart.push({ ...product, count: 1 });
         }
-
-        let updatedCart: Cart[] = cart.filter(
-          (c) => c.user.id !== loggedInUser.id
-        );
-        updatedCart.push(userCart);
-        this.storageservice.setCart(updatedCart);
       } else {
-        let newCart: Cart = {
-          user: loggedInUser,
-          product: [{ ...product, count: 1 }],
-        };
-        cart.push(newCart);
-        this.storageservice.setCart(cart);
+        cart.push({ user: loggedUser, cart: [{ ...product, count: 1 }] });
       }
+      this.storageservice.setCart(cart);
     }
   }
 
@@ -94,7 +49,7 @@ export class CartService {
 
     let userCart: Product[] | undefined = cart.find(
       (c) => c.user.id === loggedInUser.id
-    )?.product;
+    )!.cart;
 
     if (!userCart) userCart = [];
     return userCart;
@@ -108,32 +63,4 @@ export class CartService {
     }, 0);
   }
 
-  checkout(): void {
-    let loggedInUser: Users = this.storageservice.getLoggedInUser();
-    let cart: Cart[] = this.storageservice.getCart();
-
-    this.storageservice.setCart(
-      cart.filter((c) => c.user.id !== loggedInUser.id)
-    );
-  }
-
-  getProductCartCount(id: number): number {
-    let cart = this.storageservice.getCart();
-    let user = this.authservice.getLoggedInUser();
-
-    let userCart: Product[] | undefined = cart.find(
-      (c) => c.user.id === user.id
-    )?.product;
-
-    let count: number = 0;
-    if (userCart) {
-      if (userCart.find((cart) => cart.id === id))
-        count = userCart.find((cart) => cart.id === id)?.count!;
-    }
-
-    console.log(`id => ${count}`);
-
-    return count;
-  }
 }
-

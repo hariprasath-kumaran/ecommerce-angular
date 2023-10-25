@@ -29,8 +29,7 @@ export class StorageserviceService {
   }
 
   getCart(): Cart[] {
-    let cart = JSON.parse(localStorage.getItem('cart') as string);
-    if (cart === null) cart = [];
+    let cart = JSON.parse(localStorage.getItem('cart') as string)!;
     return cart;
   }
 
@@ -43,15 +42,15 @@ export class StorageserviceService {
   }
 
   setLoggedInUser(user: Users): void {
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
+    localStorage.setItem('loginuser', JSON.stringify(user));
   }
 
   getLoggedInUser(): Users {
-    return JSON.parse(localStorage.getItem('loggedInUser') as string);
+    return JSON.parse(localStorage.getItem('loginuser') as string)!;
   }
 
   removeLoggedInUser(): void {
-    localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('loginuser');
   }
   setUser(user: Users) {
     if (user) {
@@ -65,7 +64,7 @@ export class StorageserviceService {
   }
 
   isUserLoggedIn(): boolean {
-    return localStorage.getItem('loggedInUser') !== null;
+    return localStorage.getItem('loginuser') !== null;
   }
 
   setProducts(products: Product[]): void {

@@ -3,5 +3,5 @@ import { Users } from './users';
 
 export interface Cart {
   user: Users;
-  product: Product[];
+  cart: Product[];
 }

@@ -1,27 +1,13 @@
-<h1>Products</h1>
+<p class="fs-1">Products</p>
 <div class="row">
-  <div class="col-4"></div>
-</div>
-<div *ngFor="let product of Products">
-  <div class="img-box">
-    <div class="imagewrap">
-      <img
-        src="{{ product.image }}"
-        width="200px"
-        height="200px"
-        class="img-fluid"
-        alt=""
-      />
-    </div>
-    <div class="thumb-content">
-      <h4>{{ product.title }}</h4>
-      <p>{{ product.description }}</p>
-
-      <p class="item-price"></p>
-      <p>{{ product.price }}₹</p>
-      <button (click)="addToCart(product.id)" class="btn btn-primary">
-        Add to Cart
-      </button>
+  <div class="col-3 mt-4" *ngFor="let product of Products">
+    <div
+      class="border rounded p-5 bg-primary-white border-primary-subtle d-flex flex-column"
+    >
+      <img [src]="product.image" alt="image" style="min-width:200px;height:200px" />
+      <p class="fs-5 my-1 mt-2 text-center">{{product.title.substring(0,18)}}</p>
+      <p class="fs-4 my-1 mb-2 text-center">₹ {{product.price}}</p>
+      <button class="btn btn-outline-primary" (click)="addToCart(product.id)">Add to Cart</button>
     </div>
   </div>
 </div>

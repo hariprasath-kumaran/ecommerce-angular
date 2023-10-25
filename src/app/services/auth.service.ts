@@ -12,7 +12,7 @@ export class AuthService {
     let userval: boolean = true;
     for (let u of users) {
       if (u.email === user.email && u.password === user.password) {
-        this.storageservice.getLoggedInUser();
+        this.storageservice.setLoggedInUser(u);
         userval = true;
         
       }

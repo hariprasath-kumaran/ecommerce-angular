@@ -12,7 +12,6 @@ import { StorageserviceService } from 'src/app/services/storageservice.service';
   templateUrl: './cart.component.html',
 })
 export class CartComponent {
-  carts:Product[]=[]
   cartProducts: Product[]=[];
   constructor(
     private cartservice: CartService,
@@ -22,19 +21,11 @@ export class CartComponent {
 
   ngOnInit(): void {
     this.cartProducts = this.cartservice.getUserCart();
-    console.log(this.cartProducts);
   }
 
-  isCartAvailable(): boolean {
-    return this.cartservice.getCount() > 0;
-  }
 
   getTotal(): number {
     return this.cartservice.getTotal();
   }
 
-  checkout(): void {
-    this.cartservice.checkout();
-    this.router.navigate(['']);
-  }
 }

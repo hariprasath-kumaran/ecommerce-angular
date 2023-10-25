@@ -24,7 +24,6 @@ export class HomeComponent{
       next: (data: Product[]) => {
         this.Products = data;
         this.storageservice.setProducts(this.Products);
-        this.storageservice.setCart(this.cartItems);
       },
       complete: () => {
         console.log('completed');
@@ -37,10 +36,9 @@ export class HomeComponent{
   }
 
 
-  addToCart(id: number, operation: string = '+'): void {
-    this.cartservices.addToCart(id, operation);
+  addToCart(id: number): void {
+    this.cartservices.addToCart(id);
   }
-  
 
   }
 
